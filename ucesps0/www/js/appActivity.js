@@ -16,7 +16,7 @@ function trackLocation() {
 
 function showPosition(position) {
     L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
-    mymap.setView([position.coords.latitude, position.coords.longitude], 10);
+    mymap.setView([position.coords.latitude, position.coords.longitude], 13);
 }
 
 // create the code to get the Earthquakes data using an XMLHttpRequest
