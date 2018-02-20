@@ -3,14 +3,21 @@ var client;
 // and a variable that will hold the layer itself – we need to do this outside the function so that we can use it to remove the layer later on
 var earthquakelayer;
 
-var testMarkerRed = L.AwesomeMarkers.icon({
-    icon: 'play',
-    markerColor: 'red'
-});
-var testMarkerPink = L.AwesomeMarkers.icon({
-    icon: 'play',
-    markerColor: 'pink'
-});
+// load the map
+var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+function trackLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else {
+        document.getElementById('errorMessage').innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    L.marker([position.coords.latitude, position.coords.longitude]).addTo(mymap);
+    mymap.setView([position.coords.latitude, position.coords.longitude], 10);
+}
 
 // create the code to get the Earthquakes data using an XMLHttpRequest
 function getEarthquakes() {
@@ -41,9 +48,6 @@ function loadEarthquakelayer(earthquakedata) {
         mymap.fitBounds(earthquakelayer.getBounds());
     }
 }
-
-// load the map
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
 
 // load the tiles
 L.tileLayer(
